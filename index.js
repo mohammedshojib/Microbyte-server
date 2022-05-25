@@ -60,17 +60,32 @@ async function run() {
     });
     // STRIPE
 
-    app.post("/create-payment-intent", verifyAuth, async (req, res) => {
-      const pdAmount = req.body;
-      const total = pdAmount.total;
-      const amount = total * 100;
-      const paymentIntent = await stripe.paymentIntents.create({
-        amount: amount,
-        currency: "usd",
-        payment_method_types: ["card"],
-      });
-      res.send({ clientSecret: paymentIntent.client_secret });
-    });
+    // app.post("/create/payment", async (req, res) => {
+    //   const total = req.body.total;
+    //   const amount = total * 100;
+    //   const paymentIntent = await stripe.paymentIntents.create({
+    //     amount: amount,
+    //     currency: "usd",
+    //     payment_method_types: ["card"],
+    //   });
+    //   res.send({ clientSecret: paymentIntent.client_secret });
+    // });
+
+    // app.post("/payment/create", async (req, res) => {
+    //   const total = req.body.total;
+    //   console.log("Payment Request recieved for this usd", { total });
+    //   const amount = total * 100;
+    //   console.log("Payment Request recieved for this usd", { amount });
+
+    //   const payment = await stripe.paymentIntents.create({
+    //     amount: total * 100,
+    //     currency: "usd",
+    //   });
+
+    //   res.status(201).send({
+    //     clientSecret: payment.client_secret,
+    //   });
+    // });
 
     // <<===all Prodtcs===>
 
