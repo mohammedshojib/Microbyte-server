@@ -142,6 +142,20 @@ async function run() {
       const isAdmin = user.role === "admin";
       res.send({ admin: isAdmin });
     });
+    // <<====== UPDATE DATA =====>>
+    app.put("/update/:email", async (req, res) => {
+      const email = req.params.email;
+      const updatedData = req.body.updatedData;
+      const filter = await userColection.findOne({ email: email });
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          updatedData,
+        },
+      };
+      const result = await userColection.updateOne(filter, updatedDoc, options);
+      res.send(result);
+    });
 
     // <<===all Reviews===>
 
@@ -184,14 +198,14 @@ async function run() {
       res.send(payment);
     });
 
-    app.post("/add-products", async (req, res) => {
-      const myTodo = req.body;
-      const result = await productColection.insertOne(myTodo);
+    app.post("/add-products", verifyAuth, async (req, res) => {
+      const myProduct = req.body;
+      const result = await productColection.insertOne(myProduct);
       res.send(result);
     });
-    app.post("/Checkout", async (req, res) => {
-      const Checkoutpd = req.body;
-      const result = await orderColection.insertOne(Checkoutpd);
+    app.post("/checkout", async (req, res) => {
+      const checkout = req.body;
+      const result = await orderColection.insertOne(checkout);
       res.send(result);
     });
     app.post("/reviews", async (req, res) => {
