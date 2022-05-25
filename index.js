@@ -173,6 +173,13 @@ async function run() {
       const user = await userColection.find(query).toArray();
       res.send(user);
     });
+    // <<===ALL Orders===>
+
+    app.get("/orders", verifyAuth, async (req, res) => {
+      const query = {};
+      const order = await orderColection.find(query).toArray();
+      res.send(order);
+    });
     //<===== MY ORDERS ====>
 
     app.get("/my-order", verifyAuth, async (req, res) => {
@@ -224,11 +231,13 @@ async function run() {
       const result = await productColection.insertOne(myProduct);
       res.send(result);
     });
+
     app.post("/checkout", async (req, res) => {
       const checkout = req.body;
       const result = await orderColection.insertOne(checkout);
       res.send(result);
     });
+
     app.post("/reviews", async (req, res) => {
       const reviews = req.body;
       const result = await reviewsColection.insertOne(reviews);
@@ -243,12 +252,20 @@ async function run() {
       const result = await productColection.deleteOne(query);
       res.send(result);
     });
+    // <<<< PRODUCT DELETE  >>>>>
+
+    app.delete("/orderd/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await orderColection.deleteOne(query);
+      res.send(result);
+    });
     // <<<< order DELETE  >>>>>
 
     app.delete("/deleteo/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
-      const result = await productColection.deleteOne(query);
+      const result = await orderColection.deleteOne(query);
       res.send(result);
     });
   } finally {
