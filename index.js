@@ -190,6 +190,27 @@ async function run() {
           .send({ message: "Boo! Your details are fake Login again" });
       }
     });
+    //<===== UPDATE QUANTITY ====>
+
+    app.put("/quanrtity/:id", async (req, res) => {
+      const id = req.params.id;
+      const updateQuantity = req.body;
+      const filter = { _id: ObjectId(id) };
+      console.log(updateQuantity);
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          quanitity: updateQuantity.updatedQuantity,
+        },
+      };
+      console.log(updatedDoc);
+      const result = await productColection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
 
     app.get("/payment/:id", verifyAuth, async (req, res) => {
       const id = req.params.id;
