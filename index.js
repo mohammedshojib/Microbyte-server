@@ -235,7 +235,17 @@ async function run() {
       res.send(result);
     });
 
-    app.delete("/todo/:id", async (req, res) => {
+    // <<<< PRODUCT DELETE  >>>>>
+
+    app.delete("/productd/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const result = await productColection.deleteOne(query);
+      res.send(result);
+    });
+    // <<<< order DELETE  >>>>>
+
+    app.delete("/deleteo/:id", async (req, res) => {
       const id = req.params.id;
       const query = { _id: ObjectId(id) };
       const result = await productColection.deleteOne(query);
