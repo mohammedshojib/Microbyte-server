@@ -135,6 +135,45 @@ async function run() {
         res.status(403).send({ message: "forbidden" });
       }
     });
+
+    //<===== UPDATE PAY ====>
+
+    app.put("/pay/:id", async (req, res) => {
+      const id = req.params.id;
+      const updatePay = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          pay: updatePay.pay,
+        },
+      };
+      const result = await orderColection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
+    //<===== UPDATE PAY ====>
+
+    app.put("/shipped/:id", async (req, res) => {
+      const id = req.params.id;
+      const shipped = req.body;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updatedDoc = {
+        $set: {
+          shipped: shipped.shipped,
+        },
+      };
+      const result = await orderColection.updateOne(
+        filter,
+        updatedDoc,
+        options
+      );
+      res.send(result);
+    });
     // <<======isADMIN CHECKER=====>>
     app.get("/admin/:email", async (req, res) => {
       const email = req.params.email;
