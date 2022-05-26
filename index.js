@@ -111,7 +111,7 @@ async function run() {
 
     // <<===MAKE ADMIN===>
 
-    app.put("/user/admin/:id", verifyAuth, async (req, res) => {
+    app.put("/user/admin/:id", async (req, res) => {
       const id = req.params.id;
       const requester = req.decoded.email;
       const requesterAccount = await userColection.findOne({
