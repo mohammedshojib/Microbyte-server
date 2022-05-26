@@ -60,9 +60,10 @@ async function run() {
     });
     // STRIPE
 
-    // app.post("/create/payment", async (req, res) => {
-    //   const total = req.body.total;
-    //   const amount = total * 100;
+    // app.post("/create-payment-intent", async (req, res) => {
+    //   const service = req.body;
+    //   const price = service.price;
+    //   const amount = price * 100;
     //   const paymentIntent = await stripe.paymentIntents.create({
     //     amount: amount,
     //     currency: "usd",
@@ -71,21 +72,21 @@ async function run() {
     //   res.send({ clientSecret: paymentIntent.client_secret });
     // });
 
-    // app.post("/payment/create", async (req, res) => {
-    //   const total = req.body.total;
-    //   console.log("Payment Request recieved for this usd", { total });
-    //   const amount = total * 100;
-    //   console.log("Payment Request recieved for this usd", { amount });
+    app.post("/payment/create", async (req, res) => {
+      const total = req.body.total;
+      console.log("Payment Request recieved for this usd", { total });
+      const amount = total * 100;
+      console.log("Payment Request recieved for this usd", { amount });
 
-    //   const payment = await stripe.paymentIntents.create({
-    //     amount: total * 100,
-    //     currency: "usd",
-    //   });
+      const payment = await stripe.paymentIntents.create({
+        amount: total * 100,
+        currency: "usd",
+      });
 
-    //   res.status(201).send({
-    //     clientSecret: payment.client_secret,
-    //   });
-    // });
+      res.status(201).send({
+        clientSecret: payment.client_secret,
+      });
+    });
 
     // <<===all Prodtcs===>
 
